@@ -2,8 +2,8 @@ class_name AnnouncerSystem
 extends Node
 # A system that provides real time comments on gameplay. This system should check for--
 # and dynamically load--announcers.
-# 
-# Other improvements we need to implement include some kind of excitement state that the 
+#
+# Other improvements we need to implement include some kind of excitement state that the
 # announcer is in. Where scoring within `n` seconds of another goal increases their
 # excitement and more excited samples play as a result
 #
@@ -36,9 +36,9 @@ var _audio_player := self._make_audio_player(AudioController.ANNOUNCER_BUS)
 func _init() -> void:
 	self.set_pause_mode(PAUSE_MODE_PROCESS)
 	self._change_voice(AudioController.get_announcer_voice())
-	
+
 	self.set_up_last_used()
-	
+
 	var _a = AudioController.connect("announcer_voice_changed", self, "_change_voice")
 	var _b = ArenaController.connect("game_started", self, "_on_game_started")
 	var _c = ArenaController.connect("game_paused", self, "_on_game_paused")
@@ -53,7 +53,7 @@ func make_announcement(announcement_type: int, is_excited: bool = false, overrid
 	# Don't play if a more important announcement is playing.
 	if !override_current && _current_announcement_type > -1 && _current_announcement_type <= announcement_type:
 		return
-	
+
 	# Play inturrupt if something else is already playing.
 	# if _current_announcement_type > AnnouncementType.INTERRUPT:
 	# 	_current_announcement_type = -1
@@ -62,17 +62,17 @@ func make_announcement(announcement_type: int, is_excited: bool = false, overrid
 	# 	return
 
 	_current_announcement_type = announcement_type
-	
+
 	var voice_line_options: Array = (
 		_voice_clips[_current_announcement_type][-1] if is_excited else
 		_voice_clips[_current_announcement_type][0]
 	)
-	
+
 	var candidate_line:int = self._random_choice(voice_line_options)
-	
+
 	if _last_used[announcement_type][0] == candidate_line:
 		candidate_line = self._random_choice(voice_line_options)
-	
+
 	_last_used[announcement_type][0] = candidate_line
 
 	_audio_player.set_stream(voice_line_options[candidate_line])
@@ -98,9 +98,9 @@ func _on_game_started() -> void:
 func _on_game_paused(is_pausing: bool) -> void:
 	if !ArenaController.current_game_state_contains(ArenaController.GameState.IN_GAME):
 		return
-	
+
 	var is_excited: bool = ArenaController.get_player_one_score() > EXCITED_GOAL_NUM || ArenaController.get_player_two_score() > EXCITED_GOAL_NUM
-	
+
 	if is_pausing:
 		self.make_announcement(AnnouncementType.GAME_PAUSED, is_excited)
 	else:
@@ -117,13 +117,13 @@ func _on_game_won(winning_player: int) -> void:
 func _on_goal_scored(scoring_player: int) -> void:
 	if ArenaController.current_game_state_contains(ArenaController.GameState.GAME_OVER):
 		return
-	
+
 	# Keep from adding interrupt to game won announcement.
 	if ArenaController.player_score(scoring_player) == GameplayController.get_points_to_win():
 		return
 
 	var is_excited: bool = ArenaController.player_score(scoring_player) >= GameplayController.get_points_to_win() - EXCITED_GOAL_NUM
-	
+
 	if scoring_player == 1:
 		self.make_announcement(AnnouncementType.PLAYER_ONE_SCORED, is_excited)
 	elif scoring_player == 2:
@@ -175,7 +175,7 @@ func _load_voice_clips(announcer_index: int) -> Array:
 				],
 				# GAME UNPAUSED.
 				[
-					[ 
+					[
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_GB/game_unpaused_1.ogg"),
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_GB/game_unpaused_2.ogg"),
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_GB/game_unpaused_3.ogg"),
@@ -450,7 +450,7 @@ func _load_voice_clips(announcer_index: int) -> Array:
 				],
 				# GAME UNPAUSED.
 				[
-					[ 
+					[
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_BF/game_unpaused/game_unpaused_1.ogg"),
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_BF/game_unpaused/game_unpaused_2.ogg"),
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_BF/game_unpaused/game_unpaused_3.ogg"),
@@ -589,7 +589,7 @@ func _load_voice_clips(announcer_index: int) -> Array:
 					[
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_BF/one_min_warning/one_min_warning_1.ogg"),
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_BF/one_min_warning/one_min_warning_2.ogg"),
-						
+
 					]
 				],
 				# THIRTY SEC WARNING
@@ -623,7 +623,7 @@ func _load_voice_clips(announcer_index: int) -> Array:
 				],
 				# GAME UNPAUSED.
 				[
-					[ 
+					[
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_R/unpause/lets-get-back-into-the-game.ogg"),
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_R/unpause/and-welcome-back.ogg"),
 						load("res://Assets/GameComponents/AnnouncerSystem/audio/voice_R/unpause/game-on.ogg"),

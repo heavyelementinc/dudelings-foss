@@ -15,26 +15,26 @@ func _ready() -> void:
 func _on_Area2DLeft_body_entered(body: Node) -> void:
 	if !body is GameBall:
 		return
-	
+
 	$Sprite.set_frame(1)
 
 
 func _on_Area2DLeft_body_exited(body: Node) -> void:
 	if !body is GameBall:
 		return
-	
+
 	$Sprite.set_frame(0)
 
 
 func _on_Area2DRight_body_entered(body: Node) -> void:
 	if !body is GameBall:
 		return
-	
+
 	$Sprite.set_frame(2)
 
 
 func _on_Area2DRight_body_exited(body: Node) -> void:
 	if !body is GameBall:
 		return
-	
+
 	$Sprite.set_frame(0)

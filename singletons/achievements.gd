@@ -160,17 +160,17 @@ func _get_player_types(row: Dictionary) -> Dictionary:
 	var ai_player = null
 	var human_player = null
 	# Let's determine which player is an AI opponent
-	if(home >= easy_ai): 
+	if(home >= easy_ai):
 		ai_player = "player_home"
 	else:
 		human_player = "player_home"
-	
+
 	# Let's check that we're not playing AI v. AI
-	if(away >= easy_ai): 
+	if(away >= easy_ai):
 		ai_player = "player_away"
-	else: 
+	else:
 		human_player = "player_away"
-	
+
 	return {
 		"human_player": human_player,
 		"ai_player": ai_player

@@ -97,7 +97,7 @@ func pulse_controller(player: int, weak_magnitude: float, strong_magnitude: floa
 func _setup_controller_pulse(vibrate_timer: CycleTimer, player: int, weak_magnitude: float, strong_magnitude: float, vibrate_duration: float, time_between: float, loop_count: int, pause_mode_process: bool) -> void:
 	if vibrate_timer.is_connected("interval_timeout", self, "vibrate_controller"):
 		vibrate_timer.disconnect("interval_timeout", self, "vibrate_controller")
-	
+
 	var _a = vibrate_timer.connect("interval_timeout", self, "vibrate_controller", [player, weak_magnitude, strong_magnitude, vibrate_duration])
 
 	vibrate_timer.set_pause_mode(pause_mode_process)
@@ -132,7 +132,7 @@ func controller_index(target_player: int) -> int:
 			return 0
 		elif player_two_control_option == PlayerOptions.CONTROLLER_TWO:
 			return 1
-	
+
 	# No Controller.
 	return -1
 
@@ -140,7 +140,7 @@ func controller_index(target_player: int) -> int:
 func guess_controller_type(device: int) -> int:
 	if device < 0 || Input.get_connected_joypads().size() == 0:
 		return InputController.ControllerType.KEYBOARD
-	
+
 	var xbox_strings: Array = [
 		"xbox",
 		"microsoft",
@@ -162,7 +162,7 @@ func guess_controller_type(device: int) -> int:
 	for each in playstation_strings:
 		if controller_name.find(each) != -1:
 			return InputController.ControllerType.PLAYSTATION
-	
+
 	return InputController.ControllerType.XBOX  # This is the default if there is an unknown controller.
 
 

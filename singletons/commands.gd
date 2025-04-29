@@ -26,7 +26,7 @@ func _ready() -> void:
 	output_terminal = scene.find_node("TextEdit")
 
 func set_buffer_pointer(value):
-	var bfr = command_history.size() - 1 
+	var bfr = command_history.size() - 1
 	if value >= bfr: value = bfr
 	if value <= 0: value = 0
 	buffer_pointer = value
@@ -46,15 +46,15 @@ func _input(_event) -> void:
 			command_input.call_deferred("grab_focus")
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if visible && _event.get_class() == "InputEventKey":
-		if _event.scancode == KEY_UP && _event.pressed == true: 
+		if _event.scancode == KEY_UP && _event.pressed == true:
 			command_input.text = command_history[buffer_pointer]
 			set_buffer_pointer(buffer_pointer - 1)
-		if _event.scancode == KEY_DOWN && _event.pressed == true: 
+		if _event.scancode == KEY_DOWN && _event.pressed == true:
 			command_input.text = command_history[buffer_pointer]
 			set_buffer_pointer(buffer_pointer + 1)
 		# Globals.get_tree().set_input_as_handled()
 		pass
-	
+
 
 func close_panel():
 	scene.visible = false
@@ -124,7 +124,7 @@ func _command_ai_details():
 		# details += "  "
 
 		write(details)
-	
+
 	pass
 
 func _command_ai_debug():
@@ -197,7 +197,7 @@ func _command_notifications():
 		return
 	http[0]._dispatch_request()
 	print("Dispatching request to %s" % http[0].HEAVY_ELEMENT_NEWS_ENDPOINT)
-	
+
 func _command_add_ball() -> void:
 	ArenaController.game_ball_spawner().spawn_game_ball()
 	pass

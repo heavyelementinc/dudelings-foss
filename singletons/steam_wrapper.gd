@@ -236,5 +236,5 @@ func is_player(team: int) -> bool:
 			return true
 		InputController.PlayerOptions.CONTROLLER_TWO:
 			return true
-	
+
 	return false

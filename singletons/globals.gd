@@ -1,6 +1,6 @@
 extends Node
 # The Globals class hosts constants, variables, and methods that are used throughout
-# the game. This includes things like collection/physics enums, version numbers, 
+# the game. This includes things like collection/physics enums, version numbers,
 #
 # @author ethan_hewlett
 # @copyright 2023 Heavy Element

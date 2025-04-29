@@ -164,7 +164,7 @@ func reset_audio_settings() -> void:
 
 func play_song(target_song: String, loop: bool = true) -> void:
 	var new_song = load_music(target_song)
-	
+
 	if !is_instance_valid(new_song): # Is this necessary? Might be vestigial now that we're loading in real time
 		return
 
@@ -177,7 +177,7 @@ func load_music(target_song: String) -> AudioStreamOGGVorbis:
 	# If the target song doesn't exist, then we should just return
 	if ResourceLoader.exists(target_song) == false:
 		target_song = MAIN_THEME_MUSIC
-	
+
 	# Let's load our song
 	var new_song: AudioStreamOGGVorbis = load(target_song)
 	return new_song
@@ -186,7 +186,7 @@ func play_music(target_song: String, loop: bool = false) -> void:
 	var new_song: AudioStreamOGGVorbis = load_music(target_song)
 	# Enumerate _game_music_options
 	_game_music_options = self._looping_music_options()
-	
+
 	# Check if target_song is an invalid music track
 	if !is_instance_valid(new_song):
 		# If it's invalid, play a random song
@@ -196,7 +196,7 @@ func play_music(target_song: String, loop: bool = false) -> void:
 	# Connect to the music player and listen for a "finished" signal
 	if loop && !_music_player.is_connected("finished", self, "_play_audio"):
 		var _a = _music_player.connect("finished", self, "_play_audio", [new_song, _music_player])
-	
+
 	# Remove the target song from the valid game_music_options
 	_game_music_options.erase(new_song)
 	# Play the song
@@ -206,7 +206,7 @@ func play_music(target_song: String, loop: bool = false) -> void:
 func stop_music() -> void:
 	if _music_player.is_connected("finished", self, "_loop_music"):
 		_music_player.disconnect("finished", self, "_loop_music")
-	
+
 	_music_player.stop()
 
 
@@ -250,7 +250,7 @@ func play_game_sound(sound: AudioStreamOGGVorbis, player: int, variation: Array 
 func _play_audio(audio_stream: AudioStreamOGGVorbis, audio_player: AudioStreamPlayer, variation: Array = [1.0]) -> void:
 	if !is_instance_valid(audio_stream) || !is_instance_valid(audio_player):
 		return
-	
+
 	audio_player.set_stream(audio_stream)
 	var minimum: float = variation.min()
 	var maximum: float = variation.max()
@@ -260,7 +260,7 @@ func _play_audio(audio_stream: AudioStreamOGGVorbis, audio_player: AudioStreamPl
 
 func _play_random_music_track() -> void:
 	var new_song: AudioStreamOGGVorbis = _game_music_options.pop_at(Globals.rng.randi_range(0, _game_music_options.size() - 1))
-	
+
 	self._play_audio(new_song, _music_player)
 
 	if _game_music_options.empty():

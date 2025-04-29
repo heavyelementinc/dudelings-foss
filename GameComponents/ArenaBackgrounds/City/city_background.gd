@@ -9,7 +9,7 @@ extends ArenaBackground
 func _ready() -> void:
 	$CityBuildingLeft.turn_lights_off()
 	$CityBuildingRight.turn_lights_off()
-	
+
 	# DEBUG ONLY.
 	# self._game_started()
 	# $Seagull/AnimationPlayer.get_animation("fly_into_scene").set_loop(true)
