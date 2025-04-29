@@ -43,8 +43,8 @@ func _add_pickup_to_queue(pickup_type: int, player: int, display_time: float) ->
 
 	var pickup_icon := TextureRect.new()
 	pickup_icon.set_texture(AreaPickupSpawningArea.PICKUP_ICONS[pickup_type])
-	
+
 	self.add_child(pickup_icon)
-	
+
 	var timer: SceneTreeTimer = Globals.get_tree().create_timer(display_time, false)
 	var _a = timer.connect("timeout", pickup_icon, "queue_free")
