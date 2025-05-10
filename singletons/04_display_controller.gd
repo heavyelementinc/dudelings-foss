@@ -78,7 +78,7 @@ func is_fullscreen() -> bool:
 
 func window_is_borderless(make_borderless: bool, save_data: bool = true) -> void:
 		OS.window_borderless = make_borderless
-	
+
 		if save_data:
 			GameSettingsData.save_game_setting(GameSettingsData.DISPLAY_SECTION, "is_borderless", self.is_borderless())
 
@@ -130,7 +130,7 @@ func hide_virtual_gamepad():
 	self.emit_signal("hide_virtual_gp")
 
 func show_virtual_gamepad(mode:bool = true):
-	if(!virtual_gamepad_enabled): 
+	if(!virtual_gamepad_enabled):
 		hide_virtual_gamepad()
 		return
 	self.emit_signal("show_virtual_gp", mode)

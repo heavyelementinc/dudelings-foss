@@ -61,7 +61,7 @@ func go_to_scene(target_scene_id: int) -> void:
 	last_scene_id = current_scene_id
 	current_scene_id = target_scene_id
 	_is_switching_scenes = true
-	
+
 	self._fade_in()
 #	if(SteamWrapper.initialized == false):
 #		SteamWrapper.initialize()

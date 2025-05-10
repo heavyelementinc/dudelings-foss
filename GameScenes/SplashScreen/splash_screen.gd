@@ -18,7 +18,7 @@ func _init() -> void:
 func _ready() -> void:
 	print("SplashScreen ready")
 	var _a = $VideoPlayer.connect("finished", self, "_on_VideoPlayer_finished")
-	
+
 	DisplayController.scanline_node()
 	$VideoPlayer.set_stream(HE_LOGO_VIDEO)
 	$VideoPlayer.play()
@@ -35,7 +35,7 @@ func _process(_delta: float) -> void:
 			$VideoPlayer.set_paused(true)
 			self._on_VideoPlayer_finished()
 			return
-		
+
 		if $VideoPlayer.get_stream() == DUDELINGS_LOGO_VIDEO:
 			$VideoPlayer.set_paused(true)
 			self._on_VideoPlayer_finished()

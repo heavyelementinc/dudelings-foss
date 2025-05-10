@@ -62,7 +62,7 @@ var achievement_progression : Dictionary = {
 	"mode_1": 0,
 	"mode_2": 0,
 	"mode_3": 0,
-	"vs_human": 0, 
+	"vs_human": 0,
 	"regulation_games": 0, # working
 	"custom_games": 0, # working
 	"remote_games": 0,
@@ -135,7 +135,7 @@ func _on_game_started() -> void:
 	if !_is_this_a_custom_game:
 		achievement_progression['regulation_games'] += 1
 		_debug_stats('regulation_games', achievement_progression['regulation_games'])
-	else: 
+	else:
 		achievement_progression['custom_games'] += 1
 		_debug_stats('custom_games', achievement_progression['custom_games'])
 
@@ -145,7 +145,7 @@ func _on_game_started() -> void:
 		# always reset the hattrick keys
 		if(_ai_player_hattrick_key != key): achievement_progression[key] = 0
 	var sessions = SteamWrapper.getSessionCount()
-	if(sessions != 0): 
+	if(sessions != 0):
 		achievement_progression['remote_games'] += 1
 
 	print("Steam remote play sessions: %s" % sessions)
@@ -198,7 +198,7 @@ func check_destination_unlocked() -> void:
 		Achievements._destination_unlocked()
 		if !GameplayController.destination_unlocked: emit_signal("destination_unlocked")
 		else: GameplayController.destination_unlocked = true
-	
+
 	save_stats()
 
 func _on_game_won(_detail) -> void:
@@ -249,7 +249,7 @@ func _on_pickup_canceled(_pickup, _activating_player) -> void:
 	Achievements._action_cancel_20(game_stats["pickups_cancelled"])
 	Achievements._total_pickup_remove(game_stats["pickups_cancelled"] + achievement_progression["pickups_cancelled"])
 	_debug_stats("pickups_cancelled", game_stats['pickups_cancelled'])
-	
+
 func _debug_stats(name, value) -> void:
 	print("[STATS] %s: %s" % [name, value])
 
@@ -303,16 +303,16 @@ func get_first_team() -> int:
 	var human_player := NULL_TEAM
 
 	## If the game is HUMAN vs. AI, then the human player's stats should be tracked
-	if(is_human(home_team) && !is_human(away_team)): 
+	if(is_human(home_team) && !is_human(away_team)):
 		human_player = HOME_TEAM
 		_current_human_player = home_team
 		_current_opponent = away_team
 
-	elif(is_human(away_team) && !is_human(home_team)): 
+	elif(is_human(away_team) && !is_human(home_team)):
 		human_player = AWAY_TEAM
 		_current_human_player = away_team
 		_current_opponent = home_team
-	
+
 	_ai_player_hattrick_key = "hattrick_%s" % abs(_current_opponent - InputController.PlayerOptions.AI_EASY)
 	team_to_track_stats = human_player
 	return human_player

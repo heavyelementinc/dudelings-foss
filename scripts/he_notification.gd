@@ -75,9 +75,9 @@ func _get_request_body() -> Dictionary:
 	else:
 		return {
 			"title": titleId,
-			"platform": null, 
+			"platform": null,
 			"steam_deck": null,
-			"steam_id": null, 
+			"steam_id": null,
 			"stats": []
 		}
 

@@ -693,17 +693,17 @@ default_bus_layout="res://audio_bus_layout.tres"
 
 [autoload]
 
-Globals="*res://singletons/globals.gd"
-SteamWrapper="*res://singletons/steam_wrapper.gd"
-GameplayController="*res://singletons/gameplay_controller.gd"
-DisplayController="*res://singletons/display_controller.gd"
-InputController="*res://singletons/input_controller.gd"
-SceneController="*res://singletons/scene_controller.gd"
-ArenaController="*res://singletons/arena_controller.gd"
-AudioController="*res://singletons/audio_controller.gd"
-PlayerStats="*res://singletons/player_stats.gd"
-Achievements="*res://singletons/achievements.gd"
-Commands="*res://singletons/commands.gd"
+Globals="*res://singletons/01_globals.gd"
+SteamWrapper="*res://singletons/02_steam_wrapper.gd"
+GameplayController="*res://singletons/03_gameplay_controller.gd"
+DisplayController="*res://singletons/04_display_controller.gd"
+InputController="*res://singletons/05_input_controller.gd"
+SceneController="*res://singletons/06_scene_controller.gd"
+ArenaController="*res://singletons/07_arena_controller.gd"
+AudioController="*res://singletons/08_audio_controller.gd"
+PlayerStats="*res://singletons/09_player_stats.gd"
+Achievements="*res://singletons/10_achievements.gd"
+Commands="*res://singletons/11_commands.gd"
 
 [display]
 

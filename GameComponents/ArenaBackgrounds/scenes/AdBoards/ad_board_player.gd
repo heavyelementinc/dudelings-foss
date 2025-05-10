@@ -21,20 +21,20 @@ func play_home_scores(loop: bool = false) -> void:
 
 func play_away_scores(loop: bool = false) -> void:
 	_showing_random_ads = false
-	
+
 	for ad_board in self._get_ad_boards():
 		ad_board.change_ad_sheet(ad_board.get_away_team_sheet(), 4)
 		ad_board.change_ad(0)
-	
+
 	_ad_cycle_timer.start_cycle(-1.0 if loop else 3.0, 0.75)
 
 
 func play_random_ads() -> void:
 	_showing_random_ads = true
-	
+
 	for ad_board in self._get_ad_boards():
 		ad_board.change_ad_sheet(ad_board.get_one_off_ads_sheet(), 15)
-	
+
 	self._change_ads()
 
 	_ad_cycle_timer.start_cycle(-1.0, 10.0)
@@ -45,7 +45,7 @@ func _get_ad_boards() -> Array:
 	for ad in ad_boards:
 		if !ad is AdBoard:
 			ad_boards.erase(ad)
-	
+
 	return ad_boards
 
 

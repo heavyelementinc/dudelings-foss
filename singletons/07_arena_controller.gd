@@ -82,7 +82,7 @@ func set_game_paused(new_value: bool) -> void:
 		return
 
 	game_paused = new_value
-	
+
 	Globals.get_tree().call_deferred("set_pause", game_paused)  # 'call_deferred' to allow for scene tree to update.
 
 	if game_paused:
@@ -160,7 +160,7 @@ func give_points(target_player: int, number_of_points: int) -> void:
 		player_one_score += number_of_points
 	elif target_player == 2:
 		player_two_score += number_of_points
-	
+
 	self.emit_signal("player_scored", target_player)
 	self.emit_signal("score_changed")
 
@@ -195,7 +195,7 @@ func end_game(winning_player: int = -1) -> void:
 	self._add_game_state(GameState.GAME_OVER)
 
 	self.emit_signal("game_ended")
-	
+
 	if winning_player > 0:
 		self.emit_signal("game_won", winning_player)
 
@@ -207,7 +207,7 @@ func leave_game() -> void:
 
 func reset_game_arena() -> void:
 	self._change_current_game_state(GameState.PREGAME)
-	
+
 	game_run_time = 0
 
 	if is_instance_valid(_game_run_time_timer):
@@ -227,7 +227,7 @@ func reset_game_arena() -> void:
 
 func find_goal_pos(controlling_player: int) -> Vector2:
 	var arena_goals: Array = Globals.get_tree().get_nodes_in_group(Globals.ARENA_GOAL_GROUP)
-	
+
 	if arena_goals.size() == 1:
 		return arena_goals[0].get_global_position()
 	elif arena_goals.size() == 2:
@@ -239,7 +239,7 @@ func find_goal_pos(controlling_player: int) -> Vector2:
 		for peg_goal in arena_goals:
 			if peg_goal.get_defending_player() == controlling_player && peg_goal.fractional_point_eligible:
 				target_goal = peg_goal
-		
+
 		if not target_goal:
 			print("`target_goal` was null!")
 			return Vector2(0.0, 0.0)
@@ -284,14 +284,14 @@ func _update_game_run_time() -> void:
 	if GameplayController.gametype == GameplayController.Gametypes.TIMED_MATCH:
 		if(game_run_time == 2 * 60):
 			self.emit_signal("two_min_warning")
-		
+
 		if(game_run_time == 60):
 			self.emit_signal("one_min_warning")
-		
+
 		if(game_run_time == 30):
 			self.emit_signal("thirty_sec_warning")
-		
-		
+
+
 		if(game_run_time <= 0):
 			_game_run_time_timer.stop()
 			if(player_one_score > player_two_score):

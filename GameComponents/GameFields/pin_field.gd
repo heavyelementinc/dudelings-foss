@@ -38,14 +38,14 @@ func _on_fractional_point(team, ball) -> void:
 	self.emit_signal("fractional_point", team, partial_score_tracker[index], ball)
 
 func _award_score(team_score, team, ball) -> void:
-	if(team_score <= MAX_PARTIAL_SCORE): 
+	if(team_score <= MAX_PARTIAL_SCORE):
 		for child in $PinGoals.get_children():
 			if(child.defending_player == team):
 				continue
 			# Set the audio stream to the correct pitch based on the fractional score of the player
 			child.find_node("PinRetractSFX").stream = _pin_retract_sounds[team_score - 1]
 			pass
-	
+
 	if team_score < MAX_PARTIAL_SCORE:
 		return
 	# Reset partial score to 0
