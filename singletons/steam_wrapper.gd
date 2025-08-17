@@ -1,16 +1,10 @@
 extends Node
-# A wrapper for the Steam platform. This was built to allow the game to ship
-# without the Steamworks library and still provide a functional experience
-# without having to modify the game's code to strip out the references to Steam.
-#
-# @author gbryant
-# @copyright 2025 Heavy Element
 
 var steam
 var initialize_response
 
 var initialized = false
-var this_platform: String = "itch"
+var this_platform: String = "foss"
 var is_online: bool = false
 var is_owned: bool = false
 var steam_app_id: int = 1905160
@@ -53,68 +47,69 @@ func _init() -> void:
 	# Initialize Steam
 
 func _ready():
-	if (Steam):
-		steam = Steam
-		initialize_response = steam.steamInitEx(false, steam_app_id) # .steamInitEx(false)
-		print("[STEAM] Did Steam initialize?: %s" % initialize_response)
-		if initialize_response['status'] != 0:
-			# If Steam fails to start up, shut down the app
-			print("[STEAM] Failed to initialize Steam: %s" % initialize_response['verbal'])
-			#get_tree().quit()
+	# if (Steam):
+	# 	steam = Steam
+	# 	initialize_response = steam.steamInitEx(false, steam_app_id) # .steamInitEx(false)
+	# 	print("[STEAM] Did Steam initialize?: %s" % initialize_response)
+	# 	if initialize_response['status'] != 0:
+	# 		# If Steam fails to start up, shut down the app
+	# 		print("[STEAM] Failed to initialize Steam: %s" % initialize_response['verbal'])
+	# 		#get_tree().quit()
 
-		# Some example functions to run after initializing.
-		# These can be deleted or commented out if not needed.
-		#############################################
-		#Is the user online?
-		is_online = steam.loggedOn()
+	# 	# Some example functions to run after initializing.
+	# 	# These can be deleted or commented out if not needed.
+	# 	#############################################
+	# 	#Is the user online?
+	# 	is_online = steam.loggedOn()
 
-		# Get the user's Stean name and ID
-		steam_id = steam.getSteamID()
-		steam_username = steam.getPersonaName()
+	# 	# Get the user's Stean name and ID
+	# 	steam_id = steam.getSteamID()
+	# 	steam_username = steam.getPersonaName()
 
-		# Is this app owned or is it a free weekend?
-		is_owned = steam.isSubscribed()
-		is_free_weekend = steam.isSubscribedFromFreeWeekend()
+	# 	# Is this app owned or is it a free weekend?
+	# 	is_owned = steam.isSubscribed()
+	# 	is_free_weekend = steam.isSubscribedFromFreeWeekend()
 
-		# Is the game running on the Steam Deck
-		is_on_steam_deck = steam.isSteamRunningOnSteamDeck()
-		steam_ready()
-	else:
-		print("[STEAM] Did Steam initialize?: %s" % initialize_response)
-		steam_failed()
+	# 	# Is the game running on the Steam Deck
+	# 	is_on_steam_deck = steam.isSteamRunningOnSteamDeck()
+	# 	steam_ready()
+	# else:
+	# print("Platform " % initialize_response)
+	steam_failed()
 	initialized = true
 
 func _process(_delta: float) -> void:
 	# Get callbacks
-	steam.run_callbacks()
+#	steam.run_callbacks()
+	pass
 
-func steam_ready():
-	# Set platform identifier to "steam"
-	this_platform = "steam"
-	# Store the initialization response
-	var response = initialize_response
+# func steam_ready():
+# 	# Set platform identifier to "steam"
+# 	this_platform = "steam"
+# 	# Store the initialization response
+# 	var response = initialize_response
 
-	var _a = steam.connect("current_stats_received", self, "_on_steam_stats_ready", [], CONNECT_ONESHOT)
-	#current_stats = steam.requestCurrentStats()
+# 	var _a = steam.connect("current_stats_received", self, "_on_steam_stats_ready", [], CONNECT_ONESHOT)
+# 	current_stats = steam.requestCurrentStats()
 
-	# In case it does fail, let's find out why and null the steam_api object
-	if response['status'] > 0:
-		print("Failed to initialize Steam, disabling all Steamworks functionality: %s" % initialized)
-	else:
-		print("SteamWrapper has initialized")
+# 	# In case it does fail, let's find out why and null the steam_api object
+# 	if response['status'] > 0:
+# 		print("Failed to initialize Steam, disabling all Steamworks functionality: %s" % initialized)
+# 	else:
+# 		print("SteamWrapper has initialized")
 
-	# Set the notification position
-	setOverlayNotificationPosition(1)
-	# Is the user online?
-	# is_online = Steam.is_online
-	# steam_id = Steam.steam_id
-	# steam_username = Steam.steam_username
-	# is_owned = Steam.is_owned
-	# is_free_weekend = Steam.is_free_weekend
-	# is_on_steam_deck = Steam.is_on_steam_deck
+# 	# Set the notification position
+# 	setOverlayNotificationPosition(1)
+# 	# Is the user online?
+# 	# is_online = Steam.is_online
+# 	# steam_id = Steam.steam_id
+# 	# steam_username = Steam.steam_username
+# 	# is_owned = Steam.is_owned
+# 	# is_free_weekend = Steam.is_free_weekend
+# 	# is_on_steam_deck = Steam.is_on_steam_deck
 
 func steam_failed():
-	this_platform = "itch" # Could be anything else really like a console, etc.
+	this_platform = "foss" # Could be anything else really like a console, etc.
 	steam_id = 0
 	steam_username = "You"
 	print("SteamWrapper has NOT initialized. Continuing.")
@@ -166,13 +161,11 @@ func setOverlayNotificationPosition(position: int) -> void:
 	if (!is_steam_enabled()): return
 	steam.setOverlayNotificationPosition(position)
 
-# Steam rich presence causes a segmentation fault. Let's just stub this out for now.
 func setRichPresence(token: String) -> void:
 	if(!is_steam_enabled()): return
-	return
-	# var _setting_presence = steam.setRichPresence("steam_display", token)
-	# print("Setting presence to token: %s" % token)
-	# pass
+	var _setting_presence = steam.setRichPresence("steam_display", token)
+	print("Setting presence to token: %s" % token)
+	pass
 
 func setStatsInt(name: String, value: int) -> bool:
 	if (!is_steam_enabled()): return false
